@@ -13,8 +13,8 @@ services:
       JWT_SECRET: AwesomeSecret
       BASIC_AUTH: "false"
       JWT_AUTH: "false"
-      API_KEY_AUTH: "true"
-      OIDC_AUTH: "false"
+      API_KEY_AUTH: "false"
+      O_AUTH: "false"
     ports:
       - 3000:3000
     command: npm run dev

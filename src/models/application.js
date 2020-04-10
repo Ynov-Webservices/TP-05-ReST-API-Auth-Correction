@@ -1,7 +1,12 @@
 const mongoose = require('mongoose');
 
 const applicationSchema = new mongoose.Schema({
-  api_key: String
+  apiKey: String,
+  clientId: String,
+  clientSecret: String,
+  redirectUris: Array,
+  grants: Array,
+  user: { type: mongoose.Schema.Types.ObjectId, ref: 'User' }
 });
 
 module.exports = mongoose.model('Application', applicationSchema);
