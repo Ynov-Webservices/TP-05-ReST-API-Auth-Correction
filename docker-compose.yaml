@@ -5,13 +5,14 @@ services:
     volumes:
       - /usr/src/app/node_modules
       - ./:/usr/src/app
-    # depends_on:
-    #   - mongo
+    depends_on:
+      - mongo
     #   - mysql
     environment:
       NODE_ENV: development
+      JWT_SECRET: AwesomeSecret
       BASIC_AUTH: "false"
-      JWT_AUTH: "false"
+      JWT_AUTH: "true"
       API_KEY_AUTH: "false"
       OIDC_AUTH: "false"
     ports:
@@ -19,10 +20,17 @@ services:
     command: npm run dev
 
   # Si vous souhaitez utiliser Mongo
-  # mongo:
-  #   image: mongo
-  #   expose:
-  #     - 27017
+  mongo:
+    image: mongo
+    environment:
+      MONGO_INITDB_DATABASE: base
+    ports:
+      - 27017:27017
+    expose:
+      - 27017
+    volumes:
+      - mongodb:/data/db
+      - ./src/seeds/seed.js:/docker-entrypoint-initdb.d/test.js:ro
 
   # Si vous souhaitez utiliser Mysql
   # mysql:
@@ -37,3 +45,6 @@ services:
   #   restart: always
   #   ports:
   #     - 8080:8080
+
+volumes:
+  mongodb:

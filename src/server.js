@@ -1,8 +1,14 @@
 const express = require('express');
 const basicAuth = require('express-basic-auth');
+const bearerToken = require('express-bearer-token');
+const mongoose = require('mongoose');
 const router = require('./router');
 
+mongoose.connect('mongodb://mongo:27017/base', {useNewUrlParser: true, useUnifiedTopology: true});
+
 const app = express();
+app.use(bearerToken());
+
 let port = process.env.PORT || 3000;
 
 if (process.env.BASIC_AUTH === 'true') {

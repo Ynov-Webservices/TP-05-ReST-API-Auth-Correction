@@ -1,10 +1,9 @@
 const BookController = require('./controllers/books');
+const AuthMiddleware = require('./middlewares/auth');
 
 module.exports = (app) => {
 
   // Books
   
-  app.get('/books', (req, res) => {
-    new BookController().index(req, res);
-  });
+  app.get('/books', AuthMiddleware, new BookController().index);
 }
