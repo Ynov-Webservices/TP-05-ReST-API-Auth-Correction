@@ -18,7 +18,6 @@ async function jwtAuth(req, res, next) {
     return res.status(403).json({ error: 'Invalid token' });
   }
 
-  
   const connectedUser = await userModel.findOne({token: token}).lean(true);
  
   if (!connectedUser) {

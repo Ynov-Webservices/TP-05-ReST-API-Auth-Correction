@@ -1,6 +1,7 @@
 const express = require('express');
 const basicAuth = require('express-basic-auth');
 const bearerToken = require('express-bearer-token');
+const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const router = require('./router');
 
@@ -8,6 +9,7 @@ mongoose.connect('mongodb://mongo:27017/base', {useNewUrlParser: true, useUnifie
 
 const app = express();
 app.use(bearerToken());
+app.use(bodyParser.json());
 
 let port = process.env.PORT || 3000;
 
