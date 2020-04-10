@@ -12,8 +12,8 @@ services:
       NODE_ENV: development
       JWT_SECRET: AwesomeSecret
       BASIC_AUTH: "false"
-      JWT_AUTH: "true"
-      API_KEY_AUTH: "false"
+      JWT_AUTH: "false"
+      API_KEY_AUTH: "true"
       OIDC_AUTH: "false"
     ports:
       - 3000:3000

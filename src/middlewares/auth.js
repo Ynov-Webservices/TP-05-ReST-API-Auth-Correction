@@ -1,8 +1,15 @@
 const jwt = require('jsonwebtoken');
 const userModel = require('../models/user');
+const applicationModel = require('../models/application');
 
 module.exports = function(req, res, next) {
-  return jwtAuth(req, res, next);
+  if (process.env.JWT_AUTH == 'true') {
+    return jwtAuth(req, res, next);
+  }
+
+  if (process.env.API_KEY_AUTH == 'true') {
+    return apiKeyAuth(req, res, next);
+  }
 }
 
 async function jwtAuth(req, res, next) {
@@ -21,6 +28,22 @@ async function jwtAuth(req, res, next) {
   const connectedUser = await userModel.findOne({token: token}).lean(true);
  
   if (!connectedUser) {
+    return res.status(403).json({ error: 'Token not found' });
+  }
+
+  next();
+}
+
+async function apiKeyAuth(req, res, next) {
+  if (!req.headers["x-api-key"]) {
+    return res.status(403).json({ error: 'No credentials provided' });
+  }
+
+  const apiKey = req.headers["x-api-key"];
+
+  const connectedApp = await applicationModel.findOne({api_key: apiKey}).lean(true);
+ 
+  if (!connectedApp) {
     return res.status(403).json({ error: 'Token not found' });
   }
 
