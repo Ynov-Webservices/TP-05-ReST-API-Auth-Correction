@@ -5,7 +5,7 @@ const router = require('./router');
 const app = express();
 let port = process.env.PORT || 3000;
 
-if (process.env.BASIC_AUTH) {
+if (process.env.BASIC_AUTH === 'true') {
   app.use(basicAuth({
     users: { 'admin': 'supersecret' }
   }));
